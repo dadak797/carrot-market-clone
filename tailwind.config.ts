@@ -8,8 +8,8 @@ const config: Config = {
   theme: {
     extend: {},
   },
-  darkMode: "class",
-  plugins: [],
+  darkMode: "media",
+  plugins: [require("@tailwindcss/forms")],
 }
 
 export default config
