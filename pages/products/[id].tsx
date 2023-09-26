@@ -4,15 +4,27 @@ import Layout from "../../components/layout";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import Link from "next/link";
+import { Product, User } from "@prisma/client";
+
+
+interface ProductWithUser extends Product {
+  user: User;
+}
+
+interface ItemDetailResponse {
+  ok: boolean;
+  product: ProductWithUser;
+  relatedProducts: Product[];
+}
 
 const ItemDetail: NextPage = () => {
   const router = useRouter();
-  const { data } = useSWR(
+  const { data } = useSWR<ItemDetailResponse>(
     router.query.id ? `/api/products/${router.query.id}` : null
   );
   return (
     <Layout canGoBack>
-      <div className="px-4  py-4">
+      <div className="px-4 py-4">
         <div className="mb-8">
           <div className="h-96 bg-slate-300" />
           <div className="flex cursor-pointer py-3 border-t border-b items-center space-x-3">
@@ -26,7 +38,7 @@ const ItemDetail: NextPage = () => {
           </div>
           <div className="mt-5">
             <h1 className="text-3xl font-bold text-gray-900">{ data?.product?.name }</h1>
-            <span className="text-2xl block mt-3 text-gray-900">{ data?.product?.price }</span>
+            <span className="text-2xl block mt-3 text-gray-900">${ data?.product?.price }</span>
             <p className=" my-6 text-gray-700">
               { data?.product?.description }
             </p>
@@ -55,12 +67,12 @@ const ItemDetail: NextPage = () => {
         <div>
           <h2 className="text-2xl font-bold text-gray-900">Similar items</h2>
           <div className=" mt-6 grid grid-cols-2 gap-4">
-            {[1, 2, 3, 4, 5, 6].map((_, i) => (
-              <div key={i}>
+            {data?.relatedProducts.map((product) => (
+              <Link href={`/products/${product?.id}`} key={product.id}>
                 <div className="h-56 w-full mb-4 bg-slate-300" />
-                <h3 className="text-gray-700 -mb-1">Galaxy S60</h3>
-                <span className="text-sm font-medium text-gray-900">$6</span>
-              </div>
+                <h3 className="text-gray-700 -mb-1">{product.name}</h3>
+                <span className="text-sm font-medium text-gray-900">${product.price}</span>
+              </Link>
             ))}
           </div>
         </div>
