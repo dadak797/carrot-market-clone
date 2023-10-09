@@ -40,10 +40,13 @@ const ItemDetail: NextPage = () => {
     <Layout canGoBack>
       <div className="px-4 py-4">
         <div className="mb-8">
-        <img 
-          src={`https://imagedelivery.net/-PN3rdNdPHiZc--j3mgNQw/${data?.product.image}/public`}
-          className="h-96 bg-slate-300"
-        />
+          <div className="relative pb-80">
+            <Image
+              layout="fill"
+              src={`https://imagedelivery.net/-PN3rdNdPHiZc--j3mgNQw/${data?.product.image}/public`}
+              className="bg-slate-300 object-cover"
+            /> 
+          </div>
           <div className="flex cursor-pointer py-3 border-t border-b items-center space-x-3">
             <Image
               width={48}
