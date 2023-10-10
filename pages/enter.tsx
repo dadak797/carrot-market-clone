@@ -8,7 +8,9 @@ import useMutation from "@/libs/client/useMutation";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 
-const Bs = dynamic(() => new Promise(resolve => 
+const Bs = dynamic(
+  //@ts-ignore
+  () => new Promise(resolve => 
   setTimeout(() => resolve(import("@/components/bs")), 10000)
 ), { ssr: false, suspense: true, loading: () => <span>loading</span> });
 

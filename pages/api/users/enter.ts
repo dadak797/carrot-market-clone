@@ -20,9 +20,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>)
         payload,
         user: {
           connectOrCreate: {
+            //@ts-ignore
             where: {
               ...user,
             },
+            //@ts-ignore
             create: {
               name: "Anonymous",
               ...user,

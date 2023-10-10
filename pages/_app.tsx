@@ -5,6 +5,7 @@ import { SWRConfig } from "swr";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
+    //@ts-ignore
     <SWRConfig
       value={{
         fetcher: (url: string) => 
